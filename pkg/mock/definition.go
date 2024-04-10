@@ -33,6 +33,7 @@ type Request struct {
 	QueryStringParameters Values `json:"queryStringParameters"`
 	Fragment              string `json:"fragment"`
 	HTTPEntity
+	OptionalPaths map[string]bool `json:"optionalPaths"`
 }
 
 type Response struct {
