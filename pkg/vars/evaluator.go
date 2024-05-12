@@ -57,7 +57,6 @@ func (fp ResponseMessageEvaluator) Eval(req *mock.Request, m *mock.Definition, s
 	// fill any response.* holders
 	fp.mergeVars(vars, responseFiller.Fill(holders))
 
-	//replace the holders in the Callback
 	fp.walkAndFill(&m.Callback.HTTPEntity, vars)
 
 	//replace the holders in the Scenario
