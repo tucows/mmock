@@ -13,6 +13,8 @@ type ScenarioValues map[string]string
 
 type Cookies map[string]string
 
+type PathValues map[string]string
+
 type HttpHeaders struct {
 	Headers Values  `json:"headers"`
 	Cookies Cookies `json:"cookies"`
@@ -29,8 +31,10 @@ type Request struct {
 	Port                  string `json:"port"`
 	Method                string `json:"method"`
 	Path                  string `json:"path"`
+	PathVariables      PathValues `json:"pathVariables"`
 	QueryStringParameters Values `json:"queryStringParameters"`
 	Fragment              string `json:"fragment"`
+	OptionalPaths map[string]bool `json:"optionalPaths"`
 	HTTPEntity
 }
 
