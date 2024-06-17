@@ -1,4 +1,9 @@
 #####################################################
+# use following command to build a release named release
+# docker build -t release .
+#
+# after it is built, use this to run it
+# docker run -it release
 ### builder
 FROM golang:alpine as builder
 
