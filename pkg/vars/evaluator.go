@@ -96,6 +96,8 @@ func (fp ResponseMessageEvaluator) walkAndFill(res *mock.HTTPEntity, vars map[st
 
 func (fp ResponseMessageEvaluator) walkAndGetScenario(scenario mock.Scenario) []string {
 	vars := []string{}
+        fp.extractVars(scenario.Name, &vars)
+
 	for _, value := range scenario.Values {
 		fp.extractVars(value, &vars)
 	}
@@ -105,6 +107,8 @@ func (fp ResponseMessageEvaluator) walkAndGetScenario(scenario mock.Scenario) []
 func (fp ResponseMessageEvaluator) walkAndFillScenario(
 	scenario *mock.Scenario,
 	vars map[string][]string) {
+        scenario.Name = fp.replaceVars(scenario.Name, vars)
+
 	for valueName, value := range scenario.Values {
 		scenario.Values[valueName] = fp.replaceVars(value, vars)
 	}
