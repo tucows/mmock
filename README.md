@@ -33,6 +33,7 @@ Built with Go - Mmock runs without installation on multiple platforms.
 * Public interface auto discover
 * Lightweight and portable
 * No installation required
+* Server Side Events
 
 ### Example
 
@@ -248,7 +249,7 @@ See https://pkg.go.dev/regexp/syntax for regexp syntax
 * *statusCode*: Response status code
 * *headers*: Array of headers. It allows more than one value for the same key and vars.
 * *cookies*: Array of cookies. It allows vars.
-* *body*: Body string. It allows vars.
+* *body*: Body string. It allows vars. For SSE, pass the body in array of JSON format.
 
 #### Callback (Optional)
 
@@ -292,7 +293,7 @@ You can use variable data in response. The variables will be defined as tags lik
  - request.cookie."*key*"
  - request.fragment
  - request.url (full url with scheme, hostname, port, path and query parameters)
- - request.autority (return scheme, hostname and port (optional))
+ - request.authority (return scheme, hostname and port (optional))
  - request.body
 
 You can extract information from the request body too, using a dot notation path:
@@ -716,6 +717,7 @@ You can always disable this behavior adding the following flag `-server-statisti
 - Support for Optional Paths within the body [@jcdietrich](https://github.com/jcdietrich) [@jdietrich-tc](https://github.com/jdietrich-tc)
 - Support for response.* tags [@jcdietrich](https://github.com/jcdietrich) [@jdietrich-tc](https://github.com/jdietrich-tc)
 - Support for storing and recalling scenario values (scenario.* tags) [@jcdietrich](https://github.com/jcdietrich) [@jdietrich-tc](https://github.com/jdietrich-tc)
+- Support for Server Side Events [@rosspatil](https://github.com/rosspatil)
 
 ### Contributing
 
