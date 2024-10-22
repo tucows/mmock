@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
-	"github.com/jmartin82/mmock/v3/internal/dummyServer"
 )
 
 func TestReadFile(t *testing.T) {
@@ -60,7 +59,6 @@ func TestHTTPContent(t *testing.T) {
 	holders := []string{k}
 
 	result := st.Fill(holders)
-	dums.Stop()
 	v, f := result[k]
 	if !f {
 		t.Errorf("Stream key not found")
