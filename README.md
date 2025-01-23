@@ -480,6 +480,7 @@ You can also use "regex" and "concat" commands to complement GJson query:
  - fake.Zip
  - fake.Int(n) - random positive integer less than or equal to n
  - fake.IntMinMax(min, max) - random positive number greater or equal to min and less than max
+ - fake.ValidLuhn(prefix, length) - random luhn number start with prefix and with speific length
  - fake.Float(n) - random positive floating point number less than n
  - fake.UUID - generates a unique id  
 

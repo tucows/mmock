@@ -6,6 +6,7 @@ type Generator interface {
 	Character() string
 	Characters() string
 	CharactersN(n int) string
+	ValidLuhn(values ...int) string
 	City() string
 	Color() string
 	Company() string
