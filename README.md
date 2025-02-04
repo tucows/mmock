@@ -1,6 +1,25 @@
 ![Mmock](/docs/logo.png "Mmock logo")
 =========
 
+## tucows build instructions
+Found in the Dockerfile as well
+
+```
+#####################################################
+# use following command to build a release
+#
+# docker login artifacts.cnco.tucows.systems
+# docker build -t artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest .
+#
+# after building push new version
+# docker push artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest
+#
+# after it is built, use this to run it
+# docker run -it artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest
+#
+#####################################################
+```
+
 Mmock is a testing and fast prototyping tool for developers:
 
 Easy and fast HTTP mock server.
