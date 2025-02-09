@@ -3,6 +3,7 @@ package payload
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"reflect"
 	"regexp"
 	"strings"
@@ -151,6 +152,20 @@ func (jc *JSONComparator) match(
 				return false
 			}
 		}
+
+		// Convert integers and floats to string before comparing
+		if _, ok = value.(string); !ok {
+			switch v := value.(type) {
+			case float32, float64:
+				fValue := reflect.ValueOf(v).Float()
+				if fValue == math.Floor(fValue) {
+					value = fmt.Sprintf("%d", int64(fValue))
+				} else {
+					value = fmt.Sprintf("%f", fValue)
+				}
+			}
+		}
+
 		matched, err := regexp.MatchString(str, fmt.Sprint(value))
 		if err != nil || !matched {
 			log.Debugf("value %v doesn't match %v : %v", fmt.Sprint(value), str, err)
