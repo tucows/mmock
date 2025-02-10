@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"sync"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -45,6 +46,8 @@ func TestReadFile(t *testing.T) {
 
 func TestHTTPContent(t *testing.T) {
 	st := Stream{}
+	wg := &sync.WaitGroup{}
+	wg.Add(1)
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)

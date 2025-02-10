@@ -1,4 +1,27 @@
-FROM alpine:3.20
+#####################################################
+# use following command to build a release
+# 
+# docker login artifacts.cnco.tucows.systems
+# docker build -t artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest .
+#
+# after building push new version
+# docker push artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest
+#
+# after it is built, use this to run it
+# docker run -it artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest
+
+### builder
+FROM golang:alpine as builder
+
+WORKDIR /app
+COPY . .
+RUN --mount=type=cache,target=/go/pkg/mod \
+    --mount=type=cache,target=/root/.cache/go-build \
+    go build  -v -o /bin/mmock cmd/mmock/main.go
+
+#####################################################
+### release
+FROM alpine as release
 
 RUN apk --no-cache add \
     ca-certificates curl
@@ -10,7 +33,7 @@ VOLUME /config
 
 COPY tls/server.crt /tls/server.crt
 COPY tls/server.key /tls/server.key
-COPY mmock /usr/local/bin/mmock
+COPY --from=builder /bin/mmock /usr/local/bin/mmock
 
 EXPOSE 8082 8083 8084
 

@@ -9,7 +9,11 @@ import (
 
 type Values map[string][]string
 
+type ScenarioValues map[string]string
+
 type Cookies map[string]string
+
+type PathValues map[string]string
 
 type HttpHeaders struct {
 	Headers Values  `json:"headers"`
@@ -27,8 +31,10 @@ type Request struct {
 	Port                  string `json:"port"`
 	Method                string `json:"method"`
 	Path                  string `json:"path"`
+	PathVariables      PathValues `json:"pathVariables"`
 	QueryStringParameters Values `json:"queryStringParameters"`
 	Fragment              string `json:"fragment"`
+	OptionalPaths map[string]bool `json:"optionalPaths"`
 	HTTPEntity
 }
 
@@ -46,9 +52,10 @@ type Callback struct {
 }
 
 type Scenario struct {
-	Name          string   `json:"name"`
-	RequiredState []string `json:"requiredState"`
-	NewState      string   `json:"newState"`
+	Name          string         `json:"name"`
+	Values        ScenarioValues `json:"values"`
+	RequiredState []string       `json:"requiredState"`
+	NewState      string         `json:"newState"`
 }
 
 type Delay struct {
