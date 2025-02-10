@@ -1,23 +1,19 @@
-Note: All of my changes can be found in the `jcd_all` branch.
-
 ![Mmock](/docs/logo.png "Mmock logo")
 =========
 
-## tucows build instructions
-Found in the Dockerfile as well
-
+## Tucows build instructions
 ```
 #####################################################
 # use following command to build a release
-#
+# 
 # docker login artifacts.cnco.tucows.systems
-# docker build -t artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest .
+# docker build --platform linux/amd64,linux/arm64 -t artifacts.cnco.tucows.systems/mse-platform-docker/tucows-mmock:latest .
 #
 # after building push new version
-# docker push artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest
+# docker push artifacts.cnco.tucows.systems/mse-platform-docker/tucows-mmock:latest
 #
 # after it is built, use this to run it
-# docker run -it artifacts.cnco.tucows.systems/mse-mint-docker/mmock-jcd:latest
+# docker run -it artifacts.cnco.tucows.systems/mse-platform-docker/tucows-mmock:latest
 #
 #####################################################
 ```
