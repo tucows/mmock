@@ -9,7 +9,10 @@ import (
 	"time"
 
 	"github.com/tidwall/gjson"
+        "github.com/jmartin82/mmock/v3/internal/config/logger"
 )
+
+var log = logger.Log
 
 // HTTP is and adaptor beteewn the http and mock config.
 type HTTP struct {
@@ -93,6 +96,8 @@ func isSSE(fr *Response) bool {
 }
 
 func addHeadersAndCookies(fr *Response, w http.ResponseWriter) {
+        log.Debugf("WriteHTTPResponseFromDefinition fr: %v", fr)
+
 	for header, values := range fr.Headers {
 		for _, value := range values {
 			w.Header().Add(header, value)

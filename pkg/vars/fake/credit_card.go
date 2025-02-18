@@ -2,6 +2,7 @@ package fake
 
 import (
 	"math/rand"
+	"strconv"
 	"time"
 
 	luhn "github.com/joeljunstrom/go-luhn"
@@ -42,6 +43,11 @@ func (c *CreditCardGenerator) getNumber(name string) string {
 func (c *CreditCardGenerator) CreditCardVisa() string {
 	return c.getNumber("visa")
 }
+
+func (c *CreditCardGenerator) ValidLuhn(values ...int) string {
+	return luhn.GenerateWithPrefix(values[1], strconv.Itoa(values[0]))
+}
+
 func (c *CreditCardGenerator) CreditCardVisaElectron() string {
 	return c.getNumber("visaelectron")
 }

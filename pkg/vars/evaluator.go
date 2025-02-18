@@ -57,7 +57,6 @@ func (fp ResponseMessageEvaluator) Eval(req *mock.Request, m *mock.Definition, s
 	// fill any response.* holders
 	fp.mergeVars(vars, responseFiller.Fill(holders))
 
-	//replace the holders in the Callback
 	fp.walkAndFill(&m.Callback.HTTPEntity, vars)
 
 	//replace the holders in the Scenario
@@ -97,6 +96,8 @@ func (fp ResponseMessageEvaluator) walkAndFill(res *mock.HTTPEntity, vars map[st
 
 func (fp ResponseMessageEvaluator) walkAndGetScenario(scenario mock.Scenario) []string {
 	vars := []string{}
+        fp.extractVars(scenario.Name, &vars)
+
 	for _, value := range scenario.Values {
 		fp.extractVars(value, &vars)
 	}
@@ -106,6 +107,10 @@ func (fp ResponseMessageEvaluator) walkAndGetScenario(scenario mock.Scenario) []
 func (fp ResponseMessageEvaluator) walkAndFillScenario(
 	scenario *mock.Scenario,
 	vars map[string][]string) {
+          log.Debugf("scenario.Name before: %v", scenario.Name)
+        scenario.Name = fp.replaceVars(scenario.Name, vars)
+          log.Debugf("scenario.Name after: %v", scenario.Name)
+
 	for valueName, value := range scenario.Values {
 		scenario.Values[valueName] = fp.replaceVars(value, vars)
 	}

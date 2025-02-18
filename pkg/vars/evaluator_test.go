@@ -174,6 +174,9 @@ func (ddf DummyDataFaker) Int(n int) string {
 func (ddf DummyDataFaker) IntMinMax(values ...int) string {
 	return ddf.Dummy + strconv.Itoa(values[0]+1)
 }
+func (ddf DummyDataFaker) ValidLuhn(values ...int) string {
+	return ddf.Dummy + strconv.Itoa(values[0]+1)
+}
 func (ddf DummyDataFaker) Float(n int) string {
 	return ddf.Dummy + strconv.Itoa(n)
 }
@@ -254,6 +257,33 @@ func TestReplaceTags(t *testing.T) {
 	if mock.Callback.Body != "Callback Body hi!. Query valParam. Cookie: valCookie. Random: AleixMG" {
 		t.Error("Replaced tags in body not match", cb.Body)
 	}
+}
+
+func TestReplaceTagInScenarioName(t *testing.T) {
+	req := mock.Request{}
+	req.Body = "hi!"
+
+	val := make(mock.Values)
+        val["id"] = []string{"123454321:id:"}
+
+	req.QueryStringParameters = val
+
+	res := mock.Response{}
+	cb := mock.Callback{}
+	mock := mock.Definition{Request: req, Response: res, Callback: cb}
+        mock.Control.Scenario.Name = "scenarioName_{{request.query.id}}"
+
+	scenarioValues := make(map[string]string)
+        scenarioValues["tested"] = "ok"
+
+	storer := NewDummyScenarioStorer("scenarioName_{{request.query.id}}", scenarioValues)
+
+	varsProcessor := getProcessor()
+	varsProcessor.Eval(&req, &mock, storer)
+
+        if mock.Control.Scenario.Name != "scenarioName_123454321:id:" {
+              t.Error("Scenario name not updated", mock.Control.Scenario.Name)
+        }
 }
 
 func TestReplaceUndefinedFakeTag(t *testing.T) {

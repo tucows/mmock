@@ -69,6 +69,10 @@ func (p Provider) CreditCardVisa() string {
 	return p.ccg.CreditCardVisa()
 }
 
+func (p Provider) ValidLuhn(values ...int) string {
+	return p.ccg.ValidLuhn(values[0], values[1])
+}
+
 // CreditCardVisaElectron returns a random CreditCardVisaElectron
 func (p Provider) CreditCardVisaElectron() string {
 	return p.ccg.CreditCardVisaElectron()
