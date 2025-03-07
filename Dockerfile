@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 
 #####################################################
 ### release
-FROM alpine as release
+FROM alpine
 
 RUN apk --no-cache add \
     ca-certificates curl
