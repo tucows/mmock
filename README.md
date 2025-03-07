@@ -2,20 +2,28 @@
 =========
 
 ## Tucows build instructions
+
+Build cross-platform docker image
+=========
+
+1. Docker login for artifactory (with your LDAP creds)
+
+```bash
+docker login artifacts.cnco.tucows.systems
 ```
-#####################################################
-# use following command to build a release
-# 
-# docker login artifacts.cnco.tucows.systems
-# docker build --platform linux/amd64,linux/arm64 -t artifacts.cnco.tucows.systems/mse-platform-docker/tucows-mmock:latest .
-#
-# after building push new version
-# docker push artifacts.cnco.tucows.systems/mse-platform-docker/tucows-mmock:latest
-#
-# after it is built, use this to run it
-# docker run -it artifacts.cnco.tucows.systems/mse-platform-docker/tucows-mmock:latest
-#
-#####################################################
+
+2. Build and push the image
+
+```bash
+docker build --platform linux/amd64,linux/arm64 . \
+	-t artifacts.cnco.tucows.systems/mse-platform-docker/tucows-mmock:latest \
+	-t ghcr.io/tucowsinc/tucows-mmock/tucows-mmock:latest \
+	--push
+```
+3. Check if it's able to run
+
+```bash
+docker run -it ghcr.io/tucowsinc/tucows-mmock/tucows-mmock:latest
 ```
 
 Mmock is a testing and fast prototyping tool for developers:
@@ -314,7 +322,7 @@ You can use variable data in response. The variables will be defined as tags lik
  - request.body
 
 You can extract information from the request body too, using a dot notation path:
- 
+
  - request.body."*key*" (support for `application/json`, `application/xml` and `application/x-www-form-urlencoded` requests)
  - request.body."*deep*"."*key*" (support for `application/json`, `application/xml` requests)
 
@@ -328,7 +336,7 @@ in order to mirror the same value in the Callback or as a Scenario value (see be
 **Scenario values:**
 You can store a value in the scenario at one state,
 and then reference it later. For instance, if you need a random
-value returned with the first request, and then referenced in a 
+value returned with the first request, and then referenced in a
 future one. For example:
 
 Mock definition 1 response and control blocks (state: not_started)
@@ -360,7 +368,7 @@ control:
 
 Mock definition 2, response and control blocks (state: loaded)
 This is the second state in the series, and here the response
-can return the same random value generated in state 1, by 
+can return the same random value generated in state 1, by
 referencing `scenario.random`
 
 ```
@@ -479,7 +487,7 @@ You can also use "regex" and "concat" commands to complement GJson query:
  - fake.IntMinMax(min, max) - random positive number greater or equal to min and less than max
  - fake.ValidLuhn(prefix, length) - random luhn number start with prefix and with speific length
  - fake.Float(n) - random positive floating point number less than n
- - fake.UUID - generates a unique id  
+ - fake.UUID - generates a unique id
 
 ### Scenarios
 
@@ -523,7 +531,7 @@ You can find a comprehensive set of open tools for the OAI specification at: htt
 
 ### Verify
 
-The Mmock records the incoming requests in memory (last 100 by default). 
+The Mmock records the incoming requests in memory (last 100 by default).
 This makes it possible to verify that a request matching a specific pattern was received, and also to fetch the requests details.
 
 **Title** : Get all requests.<br>
@@ -551,7 +559,7 @@ Like stubbing this call also uses the same DSL to filter and query requests.
 ```json
 {
 	"host": "example.com",
-	"method": "GET|POST|PUT|PATCH|... (Mandatory)", 
+	"method": "GET|POST|PUT|PATCH|... (Mandatory)",
 	"path": "/your/path/:variable (Mandatory)",
 	"queryStringParameters": {
 		"name": ["value"],
@@ -583,7 +591,7 @@ Like stubbing this call also uses the same DSL to filter and query requests.
 ```json
 {
 	"host": "example.com",
-	"method": "GET|POST|PUT|PATCH|... (Mandatory)", 
+	"method": "GET|POST|PUT|PATCH|... (Mandatory)",
 	"path": "/your/path/:variable (Mandatory)",
 	"queryStringParameters": {
 		"name": ["value"],
@@ -707,7 +715,7 @@ Mmock is collecting anonymous statistics about the usage of the following action
 
 Source code: [/statistics/statistics.go](https://github.com/jmartin82/mmock/blob/master/internal/statistics/statistics.go#L30)
 
-- `requests.mock`: Mocks served (number) 
+- `requests.mock`: Mocks served (number)
 - `requests.console`: Web console usage (number)
 - `requests.verify`: Verify requests (number)
 - `feature.scenario`: Mocks with scenario feature served (number)
@@ -725,7 +733,7 @@ You can always disable this behavior adding the following flag `-server-statisti
 - Improved docker image thanks to [@daroot](https://github.com/daroot)
 - Added the possibility of access to an array index in dynamic responses [@jaimelopez](https://github.com/jaimelopez)
 - Create mapping via console thanks to [@inabajunmr](https://github.com/inabajunmr)
-- Thanks to [@joel-44](https://github.com/joel-44) for bug fixing 
+- Thanks to [@joel-44](https://github.com/joel-44) for bug fixing
 - Enviroment variables as mock variables thanks to [@marcoreni](https://github.com/marcoreni)
 - Support Regular Expressions for Field Values in JSON Request Body thanks to [@rosspatil](https://github.com/rosspatil)
 - Improved logging with levels thanks to [@jcdietrich](https://github.com/jcdietrich) [@jdietrich-tc](https://github.com/jdietrich-tc)
