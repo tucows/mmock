@@ -1,5 +1,5 @@
 ### builder
-FROM golang:alpine as builder
+FROM golang:alpine AS builder
 
 WORKDIR /app
 COPY . .
@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 
 #####################################################
 ### release
-FROM alpine as release
+FROM alpine
 
 RUN apk --no-cache add \
     ca-certificates curl
